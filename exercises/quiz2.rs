@@ -1,15 +1,3 @@
-// - Uppercase the string
-// - Trim the string
-// - Append "bar" to the string a specified amount of times
-
-// The exact form of this will be:
-// - The input is going to be a Vector of a 2-length tuple,
-//   the first element is the string, the second one is the command.
-// - The output element is going to be a Vector of strings.
-
-
-// I AM NOT DONE
-
 pub enum Command {
     Uppercase,
     Trim,
@@ -23,12 +11,19 @@ mod my_module {
         let mut output: Vec<String> = vec![];
 
         for (string, command) in input.iter() {
-            // if command uppercase
-            // if command trim
-            // if command append
+            let res = match command {
+              Command::Uppercase => string.to_uppercase(),
+              Command::Trim => String::from(string.trim()),
+              Command::Append(num) => {
+                let mut res = String::from(string);
+                res.push_str("bar".repeat(*num).as_str());
+                res
+              },
+            };
 
-            // append to output
-        }
+            output.push(res);
+          }
+
         output
     }
 }
@@ -46,7 +41,7 @@ mod tests {
             ("foo".into(), Command::Append(1)),
             ("bar".into(), Command::Append(5)),
         ]);
-        assert_eq!(output[0], "HELLO");
+        let res = assert_eq!(output[0], "HELLO");
         assert_eq!(output[1], "all roads lead to rome!");
         assert_eq!(output[2], "foobar");
         assert_eq!(output[3], "barbarbarbarbarbar");
